@@ -20,7 +20,11 @@ public class SuggestionController {
     @PostMapping
     void addSuggestion(@RequestBody Suggestion suggestion){
         suggestioRepository.save(suggestion);
+    }
 
+    @GetMapping(params = "author")
+    Iterable<Suggestion> findSuggestionByAuthor (@RequestParam(name = "author", required = true) String author){
+        return suggestioRepository.findByAuthor(author);
     }
 
 }

@@ -13,6 +13,15 @@ public class Suggestion {
     String title;
     String link;
     int score;
+    String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public Long getId() {
         return id;
