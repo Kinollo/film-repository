@@ -60,13 +60,11 @@ public class Suggestion {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Suggestion that = (Suggestion) o;
-        return score == that.score &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(link, that.link);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, link, score);
+        return Objects.hash(id);
     }
 }

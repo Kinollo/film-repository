@@ -2,6 +2,8 @@ package pl.sda.filmrepository;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/suggestions")
 public class SuggestionController {
@@ -18,13 +20,23 @@ public class SuggestionController {
     }
 
     @PostMapping
-    void addSuggestion(@RequestBody Suggestion suggestion){
-        suggestioRepository.save(suggestion);
+    Suggestion addSuggestion(@RequestBody Suggestion suggestion){
+        return suggestioRepository.save(suggestion);
     }
 
     @GetMapping(params = "author")
     Iterable<Suggestion> findSuggestionByAuthor (@RequestParam(name = "author", required = true) String author){
         return suggestioRepository.findByAuthor(author);
+    }
+
+    @GetMapping("/{id}")
+    Optional<Suggestion> findById (@PathVariable Long id){
+        return suggestioRepository.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteSuggestionById (@PathVariable Long id){
+        suggestioRepository.deleteById(id);
     }
 
 }
