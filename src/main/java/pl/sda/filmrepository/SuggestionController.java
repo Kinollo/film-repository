@@ -1,15 +1,25 @@
 package pl.sda.filmrepository;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/suggestions")
 public class SuggestionController {
 
+    SuggestioRepository suggestioRepository;
+
+    public SuggestionController(SuggestioRepository suggestioRepository) {
+        this.suggestioRepository = suggestioRepository;
+    }
+
     @GetMapping
-    void getAllSuggestions(){
+    Iterable<Suggestion> getAllSuggestions(){
+        return suggestioRepository.findAll();
+    }
+
+    @PostMapping
+    void addSuggestion(@RequestBody Suggestion suggestion){
+        suggestioRepository.save(suggestion);
 
     }
 
