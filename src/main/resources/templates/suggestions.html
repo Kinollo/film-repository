@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggestions</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Link</th>
+        <th>Score</th>
+        <th>Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="suggestion: ${allSuggestions}">
+        <td th:text="${suggestion.id}">0</td>
+        <td th:text="${suggestion.title}">title</td>
+        <td th:text="${suggestion.link}">link</td>
+        <td th:text="${suggestion.score}">0</td>
+        <td th:text="${suggestion.author}">user</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
