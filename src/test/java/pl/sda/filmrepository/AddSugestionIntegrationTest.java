@@ -108,7 +108,7 @@ public class AddSugestionIntegrationTest {
         mockMvc.perform(get("/api/suggestions/{id}",id))
                 .andExpect(jsonPath("$.title",is("Rambo1")));
     }
-    @DisplayName("gdy wyślemy DELETE na /api/suggestions" +
+    @DisplayName("gdy wyślemy DELETE na /api/suggestions/{id}" +
             "usuniemy sugestie po ID")
     @Test
     void test5() throws Exception {
