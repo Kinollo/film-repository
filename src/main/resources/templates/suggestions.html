@@ -15,12 +15,18 @@ xmlns:th="https://www.thymeleaf.org/">
     Link do filmu:
     <input type="text" name="link"><br>
     Twoja ocena:
-    <input type="number" name="score"><br>
+    <!-- <input type="number" name="score"><br> -->
+    <input type="radio" name="score" value="1">1
+    <input type="radio" name="score" value="2">2
+    <input type="radio" name="score" value="3">3
+    <input type="radio" name="score" value="4">4
+    <input type="radio" name="score" value="5">5<br>
     Autor:
     <input type="text" name="author"><br>
     <input type="submit" value="DODAJ SUGESTIE">
 </form>
-<table>
+<br><br>
+<table border="1px solid black">
     <thead>
     <tr>
         <th>ID</th>

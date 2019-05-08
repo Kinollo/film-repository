@@ -2,6 +2,7 @@ package pl.sda.filmrepository;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +21,8 @@ public class SuggestionController {
     }
 
     @PostMapping
-    Suggestion addSuggestion(@RequestBody Suggestion suggestion){
+    Suggestion addSuggestion(@RequestBody Suggestion suggestion, Principal principal){
+        suggestion.setAuthor(principal.getName());
         return suggestioRepository.save(suggestion);
     }
 
