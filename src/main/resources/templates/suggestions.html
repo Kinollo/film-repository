@@ -6,6 +6,20 @@ xmlns:th="https://www.thymeleaf.org/">
     <title>Suggestions</title>
 </head>
 <body>
+<h1>NASZE SUGESTIE !!!</h1>
+<br>
+
+<form method="post" action="/app/suggestions">
+    Tytul filmu:
+    <input type="text" name="title"><br>
+    Link do filmu:
+    <input type="text" name="link"><br>
+    Twoja ocena:
+    <input type="number" name="score"><br>
+    Autor:
+    <input type="text" name="author"><br>
+    <input type="submit" value="DODAJ SUGESTIE">
+</form>
 <table>
     <thead>
     <tr>

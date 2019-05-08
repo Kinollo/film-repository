@@ -21,5 +21,11 @@ public class AllSuggestionsViewController {
         return "suggestions";
     }
 
+    @PostMapping
+    String addSuggestion (Suggestion suggestion){
+        repository.save(suggestion);
+        return "redirect:/app/suggestions";
+    }
+
 
 }
