@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/app/suggestions")
 public class AllSuggestionsViewController {
@@ -17,8 +19,9 @@ public class AllSuggestionsViewController {
     }
 
     @GetMapping
-    String allSuggestions(Model model){
+    String allSuggestions(Model model, Principal principal){
         model.addAttribute("allSuggestions",service.getAllSuggestions());
+        model.addAttribute("author", principal.getName());
         return "suggestions";
     }
 
