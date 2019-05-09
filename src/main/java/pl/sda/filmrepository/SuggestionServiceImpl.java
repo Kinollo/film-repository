@@ -1,23 +1,21 @@
 package pl.sda.filmrepository;
 
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
     private SuggestioRepository suggestioRepository;
-    private SubskrypcjaRepo subskrypcjaRepo;
-    private MailSender mailSender;
+    private ApplicationEventPublisher eventPublisher;
 
-    public SuggestionServiceImpl(MailSender mailSender, SuggestioRepository suggestioRepository, SubskrypcjaRepo subskrypcjaRepo) {
+    public SuggestionServiceImpl(SuggestioRepository suggestioRepository, ApplicationEventPublisher eventPublisher) {
         this.suggestioRepository = suggestioRepository;
-        this.subskrypcjaRepo = subskrypcjaRepo;
-        this.mailSender = mailSender;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -27,31 +25,9 @@ public class SuggestionServiceImpl implements SuggestionService {
         suggestion.setTitle(createSuggestionDTO.getTitle());
         suggestion.setScore(createSuggestionDTO.getScore());
         suggestion.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
-        notifyAllSubscribers(suggestion);
-        return suggestioRepository.save(suggestion);
-    }
-
-    private void notifyAllSubscribers(Suggestion suggestion) {
-        Thread myThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Iterable<Subskrypcja> all = subskrypcjaRepo.findAll();
-                for (Subskrypcja sub : all) {
-                    sendMail(sub.getMail(), suggestion);
-                }
-            }
-        });
-
-        myThread.start();
-    }
-
-    void sendMail(String mail, Suggestion suggestion) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("A new exciting suggestion for you");
-        message.setTo(mail);
-        message.setText(String.format("User %s suggests to watch movie %s on %s.", suggestion.getAuthor(), suggestion.getTitle(), suggestion.getLink()));
-        mailSender.send(message);
-        System.out.printf("Sendimg mail notification to %s", mail);
+        Suggestion createdSuggestion = suggestioRepository.save(suggestion);
+        eventPublisher.publishEvent(new SuggestionCreatedEvent(Instant.now(), createdSuggestion));
+        return createdSuggestion;
     }
 
     @Override
