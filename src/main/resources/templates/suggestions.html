@@ -23,6 +23,7 @@ xmlns:th="https://www.thymeleaf.org/">
     <input type="radio" name="score" value="5">5<br>
     Autor:
     <input type="text" name="author"><br>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <input type="submit" value="DODAJ SUGESTIE">
 </form>
 <br><br>
