@@ -1,5 +1,8 @@
 package pl.sda.filmrepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
@@ -10,10 +13,12 @@ import java.util.Optional;
 public class SuggestionServiceImpl implements SuggestionService {
     private SuggestioRepository suggestioRepository;
     private SubskrypcjaRepo subskrypcjaRepo;
+    private MailSender mailSender;
 
-    public SuggestionServiceImpl(SuggestioRepository suggestioRepository, SubskrypcjaRepo subskrypcjaRepo) {
+    public SuggestionServiceImpl(MailSender mailSender, SuggestioRepository suggestioRepository, SubskrypcjaRepo subskrypcjaRepo) {
         this.suggestioRepository = suggestioRepository;
         this.subskrypcjaRepo = subskrypcjaRepo;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -35,6 +40,11 @@ public class SuggestionServiceImpl implements SuggestionService {
     }
 
     void sendMail(String mail, Suggestion suggestion) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject("A new exciting suggestion for you");
+        message.setTo(mail);
+        message.setText(String.format("User %s suggests to watch movie %s on %s.", suggestion.getAuthor(), suggestion.getTitle(), suggestion.getLink()));
+        mailSender.send(message);
         System.out.printf("Sendimg mail notification to %s", mail);
     }
 

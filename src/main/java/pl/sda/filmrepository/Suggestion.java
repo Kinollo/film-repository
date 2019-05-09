@@ -15,6 +15,16 @@ public class Suggestion {
     int score;
     String author;
 
+    @Override
+    public String toString() {
+        return "Suggestion{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", link='" + link + '\'' +
+                ", score=" + score +
+                ", author='" + author + '\'' +
+                '}';
+    }
     public String getAuthor() {
         return author;
     }
