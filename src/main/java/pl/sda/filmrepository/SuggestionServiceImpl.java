@@ -1,6 +1,5 @@
 package pl.sda.filmrepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,10 +32,17 @@ public class SuggestionServiceImpl implements SuggestionService {
     }
 
     private void notifyAllSubscribers(Suggestion suggestion) {
-        Iterable<Subskrypcja> all = subskrypcjaRepo.findAll();
-        for (Subskrypcja sub : all) {
-            sendMail(sub.getMail(), suggestion);
-        }
+        Thread myThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Iterable<Subskrypcja> all = subskrypcjaRepo.findAll();
+                for (Subskrypcja sub : all) {
+                    sendMail(sub.getMail(), suggestion);
+                }
+            }
+        });
+
+        myThread.start();
     }
 
     void sendMail(String mail, Suggestion suggestion) {
