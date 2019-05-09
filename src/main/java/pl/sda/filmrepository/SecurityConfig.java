@@ -28,6 +28,7 @@ public class SecurityConfig {
             http
                     .antMatcher("/api/**")
                     .authorizeRequests()
+                    .antMatchers("/api/subscribers").permitAll()
                     .anyRequest()
                     .authenticated()
                     .and().httpBasic()

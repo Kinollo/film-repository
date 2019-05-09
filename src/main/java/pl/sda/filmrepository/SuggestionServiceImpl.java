@@ -9,9 +9,11 @@ import java.util.Optional;
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
     private SuggestioRepository suggestioRepository;
+    private SubskrypcjaRepo subskrypcjaRepo;
 
-    public SuggestionServiceImpl(SuggestioRepository suggestioRepository) {
+    public SuggestionServiceImpl(SuggestioRepository suggestioRepository, SubskrypcjaRepo subskrypcjaRepo) {
         this.suggestioRepository = suggestioRepository;
+        this.subskrypcjaRepo = subskrypcjaRepo;
     }
 
     @Override
@@ -21,7 +23,19 @@ public class SuggestionServiceImpl implements SuggestionService {
         suggestion.setTitle(createSuggestionDTO.getTitle());
         suggestion.setScore(createSuggestionDTO.getScore());
         suggestion.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
+        notifyAllSubscribers(suggestion);
         return suggestioRepository.save(suggestion);
+    }
+
+    private void notifyAllSubscribers(Suggestion suggestion) {
+        Iterable<Subskrypcja> all = subskrypcjaRepo.findAll();
+        for (Subskrypcja sub : all) {
+            sendMail(sub.getMail(), suggestion);
+        }
+    }
+
+    void sendMail(String mail, Suggestion suggestion) {
+        System.out.printf("Sendimg mail notification to %s", mail);
     }
 
     @Override
@@ -36,7 +50,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 
     @Override
     public void deleteSuggestionById(Long id) {
-            suggestioRepository.deleteById(id);
+        suggestioRepository.deleteById(id);
     }
 
     @Override
