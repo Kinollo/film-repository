@@ -5,7 +5,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,5 +50,14 @@ public class SuggestionServiceImpl implements SuggestionService {
     @Override
     public Iterable<Suggestion> getAllSuggestions() {
         return suggestioRepository.findAll();
+    }
+
+
+    @Override
+    @Transactional
+    public void addAll(List<CreateSuggestionDTO> suggestions) {
+        for (CreateSuggestionDTO sugestion: suggestions){
+            addSuggestion(sugestion);
+        }
     }
 }
