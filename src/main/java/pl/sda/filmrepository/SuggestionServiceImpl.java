@@ -1,6 +1,7 @@
 package pl.sda.filmrepository;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
@@ -14,18 +15,17 @@ import java.util.Optional;
 public class SuggestionServiceImpl implements SuggestionService {
     private SuggestioRepository suggestioRepository;
     private ApplicationEventPublisher eventPublisher;
+    private ConversionService conversionService;
 
-    public SuggestionServiceImpl(SuggestioRepository suggestioRepository, ApplicationEventPublisher eventPublisher) {
+    public SuggestionServiceImpl(SuggestioRepository suggestioRepository, ApplicationEventPublisher eventPublisher, ConversionService conversionService) {
         this.suggestioRepository = suggestioRepository;
         this.eventPublisher = eventPublisher;
+        this.conversionService = conversionService;
     }
 
     @Override
     public Suggestion addSuggestion(CreateSuggestionDTO createSuggestionDTO) {
-        Suggestion suggestion = new Suggestion();
-        suggestion.setLink(createSuggestionDTO.getLink());
-        suggestion.setTitle(createSuggestionDTO.getTitle());
-        suggestion.setScore(createSuggestionDTO.getScore());
+        Suggestion suggestion = conversionService.convert(createSuggestionDTO, Suggestion.class);
         suggestion.setAuthor(SecurityContextHolder.getContext().getAuthentication().getName());
         Suggestion createdSuggestion = suggestioRepository.save(suggestion);
         eventPublisher.publishEvent(new SuggestionCreatedEvent(Instant.now(), createdSuggestion));
@@ -56,7 +56,7 @@ public class SuggestionServiceImpl implements SuggestionService {
     @Override
     @Transactional
     public void addAll(List<CreateSuggestionDTO> suggestions) {
-        for (CreateSuggestionDTO sugestion: suggestions){
+        for (CreateSuggestionDTO sugestion : suggestions) {
             addSuggestion(sugestion);
         }
     }
