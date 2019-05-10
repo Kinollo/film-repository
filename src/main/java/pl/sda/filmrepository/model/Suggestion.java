@@ -1,4 +1,4 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

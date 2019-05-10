@@ -1,9 +1,12 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.service;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import pl.sda.filmrepository.repository.SuggestioRepository;
+import pl.sda.filmrepository.model.Suggestion;
+import pl.sda.filmrepository.event.SuggestionCreatedEvent;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
 
 import javax.transaction.Transactional;

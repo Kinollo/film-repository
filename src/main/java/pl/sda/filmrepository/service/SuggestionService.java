@@ -1,5 +1,6 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.service;
 
+import pl.sda.filmrepository.model.Suggestion;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
 
 import java.util.List;

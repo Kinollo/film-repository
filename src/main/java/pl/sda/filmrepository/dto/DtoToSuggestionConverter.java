@@ -2,7 +2,7 @@ package pl.sda.filmrepository.dto;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import pl.sda.filmrepository.Suggestion;
+import pl.sda.filmrepository.model.Suggestion;
 
 @Component
 public class DtoToSuggestionConverter implements Converter<CreateSuggestionDTO, Suggestion> {

@@ -1,4 +1,4 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,8 +20,6 @@ public class SecurityConfig {
     @Autowired
     @Qualifier("repoUserDetailsService")
     private UserDetailsService userDetailsService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -30,7 +28,7 @@ public class SecurityConfig {
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 //                inMemoryAuthentication()
 //                .withUser("admin")
 //                .password("{noop}password")

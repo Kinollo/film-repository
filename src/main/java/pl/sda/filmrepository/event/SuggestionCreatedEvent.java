@@ -1,6 +1,7 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.event;
 
 import lombok.Value;
+import pl.sda.filmrepository.model.Suggestion;
 
 import java.time.Instant;
 

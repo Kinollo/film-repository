@@ -1,4 +1,4 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.model;
 
 import lombok.Data;
 

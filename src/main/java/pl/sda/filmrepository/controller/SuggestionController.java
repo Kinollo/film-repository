@@ -1,7 +1,9 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.controller;
 
 import org.springframework.web.bind.annotation.*;
+import pl.sda.filmrepository.model.Suggestion;
 import pl.sda.filmrepository.dto.CreateSuggestionDTO;
+import pl.sda.filmrepository.service.SuggestionService;
 
 import java.util.Optional;
 

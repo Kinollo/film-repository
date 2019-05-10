@@ -1,10 +1,13 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.event;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import pl.sda.filmrepository.model.Subskrypcja;
+import pl.sda.filmrepository.model.Suggestion;
+import pl.sda.filmrepository.repository.SubskrypcjaRepo;
 
 @Component
 public class SuggestionMailNotificationSender {

@@ -1,6 +1,7 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import pl.sda.filmrepository.model.User;
 
 import java.util.Optional;
 

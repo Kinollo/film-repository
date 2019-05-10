@@ -1,4 +1,4 @@
-package pl.sda.filmrepository;
+package pl.sda.filmrepository.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

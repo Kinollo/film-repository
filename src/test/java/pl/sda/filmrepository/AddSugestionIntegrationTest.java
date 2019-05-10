@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.sda.filmrepository.model.Suggestion;
 
 import java.util.Arrays;
 
@@ -89,7 +90,7 @@ public class AddSugestionIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-        return objectMapper.readValue(createSuggestionAsJson,Suggestion.class).getId();
+        return objectMapper.readValue(createSuggestionAsJson, Suggestion.class).getId();
 
     }
 
